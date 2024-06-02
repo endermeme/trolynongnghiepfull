@@ -1,4 +1,4 @@
-// copy from KiÃªn LÃª | https://www.facebook.com/kiinl/ | https://zero.ai.vn/js/coze.js?v=1.5
+// B@nh D3 P@g@n https://facebook.com/binh.depagan
 
 // HÃ m táº¡o ID ngáº«u nhiÃªn
 function generateRandomId() {
