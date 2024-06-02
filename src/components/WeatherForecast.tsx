@@ -11,7 +11,7 @@ export default function WeatherForecast() {
   const svg_size = 100;
   
   return (
-    <div className="flex lg:flex-row flex-col p-2 bg-white rounded-xl grow shadow-slate-300 shadow-md">
+    <div className="flex lg:flex-row flex-col p-2 bg-white rounded-xl grow shadow-slate-300 shadow-md lg:text-base sm:text-sm">
       <div className="flex items-center rounded-xl justify-center gap-8 grow lg:gap-24 mx-8">
         <div className="flex flex-col justify-start">
           <IconBox>
