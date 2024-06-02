@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hệ thống phát hiện bệnh trên cây trồng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #d1f0f9; /* Màu nền xanh nước biển */
+        }
+        #header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ */
+        }
+        #header .logo {
+            height: 40px;
+            width: auto;
+            margin-left: 10px;
+        }
+        #header .title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 24px;
+            margin: 0;
+            padding: 0 20px; /* Thêm khoảng cách để tránh quá sát */
+        }
+        #header .menu-button {
+            background-color: white;
+            color: #007BFF;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi */
+        }
+        #header .menu-button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        #header .left-section {
+            display: flex;
+            align-items: center;
+        }
+        #upload-container {
+            background: #ffffff; /* Màu nền trắng */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 90%;
+            width: 400px;
+        }
+        #imagePreview {
+            height: 300px;
+            width: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #label-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #label-container div {
+            margin-top: 5px;
+            padding: 10px;
+            background: #007bb5; /* Màu xanh nước biển đậm cho nhãn */
+            color: #ffffff; /* Màu văn bản trắng */
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            text-align: center;
+        }
+        input[type="file"] {
+            margin-top: 20px;
+            padding: 10px;
+            border: 2px dashed #007bb5; /* Màu xanh nước biển đậm cho viền */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            background-color: #d1f0f9; /* Màu nền xanh nước biển */
+        }
+        input[type="file"]:hover {
+            border-color: #005b8e; /* Màu xanh nước biển đậm hơn khi di chuột qua */
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="left-section">
+            <button class="menu-button" onclick="window.location.href='/'">
+                Trở về
+            </button>
+            <img src="/public/mainlogo.svg" alt="Logo" class="logo" />
+        </div>
+    </header>
+    <div id="upload-container">
+        <div> Vui lòng chọn ảnh có chất lượng cao</div>
+        <input id="imageUpload" type="file" />
+        <img id="imagePreview" src="#" alt="Đang chờ ảnh để nhận dạng" />
+        <div id="label-container"></div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=DxWraU1B"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+        const URL = '/service/AI/';
+
+        let model, labelContainer, maxPredictions;
+        let lastLabel = '';
+
+        async function init() {
+            const modelURL = URL + 'model.json';
+            const metadataURL = URL + 'metadata.json';
+
+            // Load the model and metadata
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            labelContainer = document.getElementById('label-container');
+            labelContainer.innerHTML = '';  // Clear existing labels
+            labelContainer.appendChild(document.createElement('div'));
+        }
+
+        async function predict() {
+            const image = document.getElementById('imagePreview');
+            const predictions = await model.predict(image, false);
+            
+            // Find the top prediction
+            const topPrediction = predictions.reduce((prev, current) => 
+                (prev.probability > current.probability) ? prev : current
+            );
+            
+            // Display and speak the highest probability prediction if it has changed
+            if (topPrediction.className !== lastLabel) {
+                lastLabel = topPrediction.className;
+                labelContainer.childNodes[0].innerHTML = `${topPrediction.className}: ${topPrediction.probability.toFixed(2)}`;
+                responsiveVoice.speak(lastLabel, "Vietnamese Female");
+            }
+        }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').attr('src', e.target.result).hide().fadeIn(650);
+                };
+                reader.readAsDataURL(input.files[0]);
+                init().then(() => {
+                    predict();
+                });
+            }
+        }
+
+        $('#imageUpload').change(function () {
+            readURL(this);
+        });
+    </script>
+</body>
+</html>

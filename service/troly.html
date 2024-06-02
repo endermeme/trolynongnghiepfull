@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Trợ lý nông nghiệp</title>
+    <script src="/service/AI/ai.js"></script>
+</head>
+<style>
+            #header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ */
+        }
+        #header .logo {
+            height: 40px;
+            width: auto;
+            margin-left: 10px;
+        }
+        #header .title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 24px;
+            margin: 0;
+            padding: 0 20px; /* Thêm khoảng cách để tránh quá sát */
+        }
+        #header .menu-button {
+            background-color: white;
+            color: #007BFF;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi */
+        }
+        #header .menu-button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        #header .left-section {
+            display: flex;
+            align-items: center;
+        }
+</style>
+<body>
+    <header id="header">
+        <div class="left-section">
+            <button class="menu-button" onclick="window.location.href='/'">
+                Trở về
+            </button>
+            <img src="/public/mainlogo.svg" alt="Logo" class="logo" />
+        </div>
+    </header>
+    <style type="text/css">
+        #coze-chatapp-container {
+            height: 100vh !important;
+            width: 100vw !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+        }
+        #coze-chatapp-iframe {
+            height: 100vh;
+            border: 0;
+        }
+        #fixed-bottom-div {
+            height: 30px;
+            width: 100%;
+            background-color: white;
+            position: fixed;
+            bottom: 0;
+            z-index: 9999;
+        }
+    </style>
+    <div id="fixed-bottom-div"></div>
+    <script>
+        var chatClientId = 'pGOI1FFyYbcFJI8D4YYzu';
+        var botId = '7366994128057630737';
+        var title = 'Trợ lý nông nghiệp';
+        var layout = 'mobile';
+        var lang = 'vi';
+        var icon = 'https://cdn.glitch.global/1eee455c-65a0-428f-a71b-89f07640b91b/logoai.svg';
+        var frameHeight = '';
+        initCozeChatApp(chatClientId, botId, title, layout, lang, icon);
+        setTimeout(function() {
+            openCozeChatPopup();
+        }, 100);
+    </script>
+</body>
+</html>
