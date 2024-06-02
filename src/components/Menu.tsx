@@ -17,8 +17,8 @@ export default function Menu() {
   return (
       
       <div className="bg-white shadow-md rounded-lg">
-        <MenuItem text={"Trợ lí nông nghiệp AI"} img_src="https://cdn3.iconfinder.com/data/icons/chatbot-robot/100/chatbot_01_16_bot_chat_robot_app_artificial_chatbot_dialog-1024.png" to="/service/troly.html"/>
-        <MenuItem text={"Chẩn đoán sâu bệnh"} img_src="https://th.bing.com/th/id/OIP.cDm9mWSgJZySo7aEhpJ12QHaHa?rs=1&pid=ImgDetMain" to="/service/chandoanbenh.html"/>
+        <MenuItem text={"Trợ lí nông nghiệp AI"} img_src="https://cdn3.iconfinder.com/data/icons/chatbot-robot/100/chatbot_01_16_bot_chat_robot_app_artificial_chatbot_dialog-1024.png" to="https://third-level-origami.glitch.me/"/>
+        <MenuItem text={"Chẩn đoán sâu bệnh"} img_src="https://th.bing.com/th/id/OIP.cDm9mWSgJZySo7aEhpJ12QHaHa?rs=1&pid=ImgDetMain" to="https://yellow-wonderful-giganotosaurus.glitch.me"/>
       </div>
       
   );
