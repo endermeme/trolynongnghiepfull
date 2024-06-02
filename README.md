@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Trợ lý nông nghiệp + 2 AI
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
