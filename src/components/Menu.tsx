@@ -3,7 +3,7 @@ function MenuItem(props: {text: string, img_src: string, to: string}) {
     <div className="bg-slate-100 p-6 rounded-lg shadow-lg active:shadow-inner flex items-center m-4">
    <img
      src={props.img_src}
-     alt="Diễn đàn nông nghiệp icon"
+     alt="Trợ lý nông nghiệp"
      className="rounded-full"
      width={50}
      height={50}
