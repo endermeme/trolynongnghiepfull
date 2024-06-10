@@ -25,4 +25,5 @@ export const weatherDescriptions: { [desc: string]: BadgeInfo } = {
   "snow": { name: "Tuyết", svg_src: asset_folder + "snow.svg" },
   "mist": { name: "Sương mù", svg_src: asset_folder + "mist.svg" },
   "light rain": { name: "Mưa nhẹ", svg_src: asset_folder + "drizzle.svg" },
+  'heavy intensity rain': { name : 'Mưa nhiều', svg_src: asset_folder + "thunderstorms-rain.svg"}
 };
